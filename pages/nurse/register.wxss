@@ -1,0 +1,24 @@
+/* pages/nurse/register.wxss */
+.img-up {
+  flex: 1 1 40;
+  margin-bottom: 20rpx;
+}
+
+.img-up image{
+  width: 300rpx;
+  height: 225rpx;
+  border: 3rpx dashed gray;
+  margin-bottom: 10rpx;
+}
+
+button.upload{
+  width: 280rpx;
+}
+
+.label {
+  margin-right: 8rpx;
+}
+input {
+  border-bottom: 1px solid gray;
+  flex: 1 1 auto;
+} 

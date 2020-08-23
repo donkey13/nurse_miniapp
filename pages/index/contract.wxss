@@ -1,0 +1,13 @@
+/* pages/index/contract.wxss */
+.label {
+  flex: 0 0 100px;
+}
+
+.input-value {
+  border-bottom: 1px solid gray;
+  flex: 1 1 auto;
+}
+
+picker {
+  flex: 1 1 auto;
+}

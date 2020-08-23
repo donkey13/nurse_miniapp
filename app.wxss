@@ -1,0 +1,61 @@
+/**app.wxss**/
+page {
+  height: 100%;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  box-sizing: border-box;
+} 
+
+.container.content-start {
+  justify-content: start;
+}
+
+.container>view {
+  margin-left: 10rpx;
+  margin-right: 10rpx;
+}
+
+.container>view:not(:last-child) {
+  margin-bottom: 10rpx;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex.row {  
+  flex-direction: row;
+}
+
+.flex.align-center {  
+  align-items: center;
+}
+
+.flex.column {
+  flex-direction: column;
+}
+
+.flex.wrap {
+  flex-wrap: wrap;
+  align-content: space-around;  
+  justify-content: space-around;
+}
+
+text.title {
+  font-size: large;
+  color: #07c160;
+  margin-bottom: 20rpx;
+}
+
+text.label {
+  height: 38rpx;
+  line-height: 38rpx;
+  font-size: small;
+  color: darkgray;
+}

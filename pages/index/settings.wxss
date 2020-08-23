@@ -1,0 +1,29 @@
+/* pages/index/settings.wxss */
+input {
+  border-bottom: 1px solid gray;
+  flex: 1 1 auto;
+} 
+
+.contrct-list {
+  padding: 8rpx;
+  margin-bottom: 20rpx;
+  border: 1px solid gray;
+  border-radius: 10rpx;
+}
+
+.contrct-list>view:not(:last-child) {
+  margin-bottom: 16rpx;
+}
+
+.contrct-item {
+  justify-content: space-around;
+  background-color: lightgrey;
+}
+
+.contrct-item.open {
+  background-color: #07c160;
+}
+
+.btn-grp>button:not(:last-child) {
+  margin-right: 10rpx;
+}

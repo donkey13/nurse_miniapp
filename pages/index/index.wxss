@@ -1,0 +1,39 @@
+/**index.wxss**/
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+.map {
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+.serv-box {
+  border: 1px solid lightgray;
+  border-radius: 8rpx;
+}
+
+.serv-item {
+  margin: 10rpx;
+}
+ 
+.btn-grp>button:not(:last-child) {
+  margin-right: 10rpx;
+}
+
+.btn-setting {
+  width: 40rpx;
+  height: 40rpx;
+  position: absolute;
+  top: 20rpx;
+  left: 20rpx;
+  z-index: 1;
+  padding: 0;
+}

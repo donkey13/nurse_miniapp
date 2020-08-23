@@ -1,0 +1,47 @@
+<!--pages/index/settings.wxml-->
+<view class="container">
+  <view>
+    <text>已为您服务 {{serveDay}} 天。</text>
+  </view>
+  <view class="flex column contrct-list"  style="flex: 1 1 auto">
+    <view>
+      <text class="title">我的服务记录</text>
+    </view>
+    <view class="flex row contrct-item {{item.status}}" wx:for="{{contracts}}" wx:key="_id">
+      <text >{{item.address}}</text>
+      <text >{{item.startDate}}</text>
+      <text >{{item.serveLength}}个月</text>
+    </view>
+  </view>
+  <view class="flex row align-center">
+    <text class="label">我的地址：</text>
+    <input value="{{address}}" bindinput="inputAddress" placeholder="我的位置"/>
+  </view>
+  <view class="flex row align-center">
+    <text class="label">我的余额：</text>
+    <text>{{balance}}</text>
+  </view>
+
+  <view>
+    <radio-group bindchange="radioChange">
+      <label class="flex row" wx:for="{{items}}" wx:key="value">
+        <view >
+          <radio value="{{item.value}}" checked="{{item.checked}}"/>
+        </view>
+        <view >{{item.name}}</view>
+      </label>
+    </radio-group>
+  </view>
+  <view class="flex row align-center">
+    <text class="label">我的推荐人：</text>
+    <text>{{recommend}}</text>
+  </view>
+  <view style="height: 2px; border-bottom: 1px solid gray;"></view>
+  <view class="flex row btn-grp"> 
+    <button type="default">地址</button>
+    <button type="default">记录</button>
+    <button type="default">评价</button>
+    <button type="default">发票</button>
+  </view>
+</view>
+

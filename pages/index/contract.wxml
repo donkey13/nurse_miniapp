@@ -1,0 +1,31 @@
+<!--pages/index/contract.wxml-->
+<view class="container content-start" >
+  <view>
+    <text class="title">服务</text>
+  </view>  
+  <view class="flex row align-center">
+    <text class="label" >我的余额：</text>
+    <text>{{userInfo.extInfo.balance}}</text>
+  </view>  
+  <view class="flex row align-center">
+    <text class="label" >选中的护工：</text>
+    <text>{{selectedNurse.name}}</text>
+  </view>
+  <view class="flex row align-center">
+    <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
+      <view class="picker flex row">
+        <text class="label" >选择开始日期: </text>
+        <text class="input-value">{{date}}</text>
+      </view>
+    </picker>
+  </view>
+  <view class="flex row align-center">
+    <text class="label" >服务时长(月):</text>
+    <input class="input-value" type="number" value="{{serveLength}}" placeholder="月" bindinput="bindInput" auto-focus/>
+  </view>
+  <view class="flex row btn-grp"> 
+    <button type="primary" bindtap="tapContract" bindtap="tapOk">确定</button>
+  </view>
+</view>
+
+

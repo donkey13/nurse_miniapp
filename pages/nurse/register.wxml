@@ -1,0 +1,28 @@
+<!--pages/nurse/register.wxml-->
+<view class="container content-start" >
+  <view class="flex row">
+    <text class="label" >姓名:</text>
+    <input class="input-value" value="{{name}}" placeholder="姓名" bindinput="bindInput" auto-focus/>
+  </view>
+  <view class="flex row wrap">
+    <view class="img-up flex column">
+      <image src="{{idfUrl}}"></image>
+      <button type="default" size="mini" bindtap="tapidf">身份证正面</button>
+    </view>
+    <view class="img-up flex column">
+      <image src="{{idbUrl}}"></image>
+      <button type="default" size="mini" bindtap="tapidb">身份证背面</button>
+    </view>
+    <view class="img-up flex column">
+      <image src="{{healthfUrl}}"></image>
+      <button type="default" size="mini" bindtap="taphealthf">健康证正面</button>
+    </view>
+    <view class="img-up flex column">
+      <image src="{{healthbUrl}}"></image>
+      <button type="default" size="mini" bindtap="taphealthb">健康证背面</button>
+    </view>
+  </view> 
+  <view class="flex row btn-grp"> 
+    <button type="primary" disabled="{{invalid}}" bindtap="tapSubmit">提交</button>
+  </view>
+</view>
