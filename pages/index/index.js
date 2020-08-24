@@ -12,6 +12,11 @@ Page({
     markers: [],
     hasOther: false,
     selectedNurse: {},
+    items: [
+      {value: 'N', name: '正常', checked: 'true'},
+      {value: 'H', name: '半失能'},
+      {value: 'T', name: '全失能'},
+    ]
   },
   onLoad: async function () {
     if (app.globalData.userInfo) {
@@ -72,9 +77,9 @@ Page({
         latitude: nurse.location.latitude,
         longitude: nurse.location.longitude,
         label: { content: nurse.name },
-        width: 30,
-        height: 30,
-        iconPath: '/images/nurse.png'
+        width: 40,
+        height: 40,
+        iconPath: '/images/care.png'
       });
       i++;
     }

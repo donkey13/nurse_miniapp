@@ -32,13 +32,24 @@
       <text class="label" >选中的护工：</text>
       <text>{{selectedNurse.name}}</text>
     </view>
-    <view class="flex row btn-grp"> 
-      <button type="primary" bindtap="tapContract" >长包服务</button>
-      <button type="default" disabled="true">邀请他人</button>
+
+    <view class="flex row align-center">
+    <text class="label" >服务类型：</text>
+    <radio-group class="flex row align-center">
+      <label class="weui-cell weui-check__label" wx:for="{{items}}" wx:key="{{item.value}}">
+        <view class="weui-cell__hd">
+          <radio value="{{item.value}}" checked="true"/>
+        </view>
+        <view class="weui-cell__bd">{{item.name}}</view>
+        </label>
+    </radio-group> 
     </view>
+
     <view class="flex row btn-grp"> 
+      <button type="default" bindtap="tapContract" >长包服务</button>
       <button type="default" bindtap="tapusersetting" >我的</button>
       <button type="default" bindtap="tapPay" >支付</button>
+      <button type="default" disabled="true">邀请他人</button>
     </view>
   </block>
 </view>

@@ -14,7 +14,7 @@
   <view class="flex row align-center">
     <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
       <view class="picker flex row">
-        <text class="label" >选择开始日期: </text>
+        <text class="label" >服务开始日期: </text>
         <text class="input-value">{{date}}</text>
       </view>
     </picker>
