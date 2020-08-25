@@ -36,11 +36,11 @@
     <view class="flex row align-center">
     <text class="label" >服务类型：</text>
     <radio-group class="flex row align-center">
-      <label class="weui-cell weui-check__label" wx:for="{{items}}" wx:key="{{item.value}}">
-        <view class="weui-cell__hd">
+      <label class="label" wx:for="{{items}}" wx:key="{{item.value}}">
+        <view class="radio">
           <radio value="{{item.value}}" checked="true"/>
         </view>
-        <view class="weui-cell__bd">{{item.name}}</view>
+        <view class="radioname">{{item.name}}</view>
         </label>
     </radio-group> 
     </view>

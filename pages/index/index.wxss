@@ -23,6 +23,15 @@
 .serv-item {
   margin: 10rpx;
 }
+
+.radioname {
+  margin: 20rpx;
+  font-size: small;
+}
+
+.radio{
+  align-content: center;
+}
  
 .btn-grp>button:not(:last-child) {
   margin-right: 10rpx;
@@ -30,7 +39,7 @@
 
 .btn-setting {
   width: 40rpx;
-  height: 40rpx;
+  height: 20rpx;
   position: absolute;
   top: 20rpx;
   left: 20rpx;
