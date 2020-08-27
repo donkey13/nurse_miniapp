@@ -11,9 +11,7 @@
           </view>
         </swiper-item>
         <swiper-item>
-          <view class="">
-          公告
-          </view>
+          <image src='/images/shouye.png'>公告</image>
         </swiper-item>
       </swiper>
     </view>
@@ -46,10 +44,11 @@
     </view>
 
     <view class="flex row btn-grp"> 
-      <button type="default" bindtap="tapContract" >长包服务</button>
+      <button type="default" bindtap="tapContract" >长包</button>
+      <button type="default" bindtap="tapTemp" >临时</button>
       <button type="default" bindtap="tapusersetting" >我的</button>
       <button type="default" bindtap="tapPay" >支付</button>
-      <button type="default" disabled="true">邀请他人</button>
+      <button type="default" disabled="true">邀请</button>
     </view>
   </block>
 </view>

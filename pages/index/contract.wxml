@@ -1,14 +1,22 @@
 <!--pages/index/contract.wxml-->
 <view class="container content-start" >
   <view>
-    <text class="title">服务</text>
-  </view>  
+    <text class="title">服务条款</text>
+  </view>
+  <view class="page-content">
+    <rich-text nodes="{{terms}}"></rich-text>
+  </view>
+
+  <view>
+    <text class="title">收费标准</text>
+  </view>
+    <p> 按月服务费1800元人民币</p>
+  
+  <view>
+    <text class="title">服务确认</text>
+  </view>
   <view class="flex row align-center">
-    <text class="label" >我的余额：</text>
-    <text>{{userInfo.extInfo.balance}}</text>
-  </view>  
-  <view class="flex row align-center">
-    <text class="label" >选中的护工：</text>
+    <text class="label" >当前选中的护工：</text>
     <text>{{selectedNurse.name}}</text>
   </view>
   <view class="flex row align-center">

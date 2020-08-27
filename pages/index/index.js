@@ -13,9 +13,10 @@ Page({
     hasOther: false,
     selectedNurse: {},
     items: [
-      {value: 'N', name: '正常', checked: 'true'},
-      {value: 'H', name: '半失能'},
-      {value: 'T', name: '全失能'},
+      {value: 'Y', name: '一般家务', checked: 'true'},
+      {value: 'H', name: '老人护理'},
+      {value: 'B', name: '半自理病人护理'},
+      {value: 'N', name: '不能自理病人护理'}
     ]
   },
   onLoad: async function () {
@@ -93,13 +94,18 @@ Page({
     this.setData({selectedNurse: nurse});
     wx.showModal({
       title: nurse.name,
-      content: '评价：4.4',
+      content: '评价：4.8',
       showCancel: false
     });
   },
   tapusersetting: function(e) {
     wx.navigateTo({
       url: './settings',
+    });
+  },
+  tapTemp: function(e) {
+    wx.navigateTo({
+      url: './tempservice',
     });
   },
   checkboxChange(e) {

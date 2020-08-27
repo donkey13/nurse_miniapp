@@ -4,7 +4,8 @@
     "pages/index/contract",
     "pages/index/settings",
     "pages/nurse/index",
-    "pages/nurse/register"
+    "pages/nurse/register",
+    "pages/index/tempservice"
   ],
   "window": {
     "backgroundTextStyle": "light",
