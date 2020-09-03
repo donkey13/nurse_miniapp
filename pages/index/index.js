@@ -13,8 +13,7 @@ Page({
     hasOther: false,
     selectedNurse: {},
     items: [
-      {value: 'Y', name: '一般家务', checked: 'true'},
-      {value: 'H', name: '老人护理'},
+      {value: 'H', name: '老人护理', checked: 'true'},
       {value: 'B', name: '半自理病人护理'},
       {value: 'N', name: '不能自理病人护理'}
     ]
@@ -147,14 +146,14 @@ Page({
     await db.collection('userInfo')
       .where({_id:app.globalData.userInfo.extInfo._id})
       .update({data:{
-        balance: _.inc(1800),
+        balance: _.inc(2400),
       }})
-    app.globalData.userInfo.extInfo.balance += 1800;
+    app.globalData.userInfo.extInfo.balance += 2400;
     this.setData({
       userInfo: app.globalData.userInfo
     });
     wx.showToast({
-      title: '模拟微信支付1800',
+      title: '微信支付2400',
     });
   }
 })

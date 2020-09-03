@@ -10,16 +10,28 @@
   <view>
     <text class="title">收费标准</text>
   </view>
-    <p> 按月服务费1800元人民币</p>
+    <p> 服务费：￥1800元人民币/月</p>
+    <p> 餐费预付款：￥600元人民币/月(多退少补)</p>
   
   <view>
     <text class="title">服务确认</text>
   </view>
+  <h4> 服务人员信息</h4>
   <view class="flex row align-center">
-    <text class="label" >当前选中的护工：</text>
+    <text class="label" >选中的护工：</text>
     <text>{{selectedNurse.name}}</text>
   </view>
   <view class="flex row align-center">
+    <text class="label" >身份证号：</text>
+    <text>{{selectedNurse.id}}</text>
+  </view>
+  <view class="flex row align-center">
+    <text class="label" >电话：</text>
+    <text>{{selectedNurse.tel}}</text>
+  </view>
+
+  <h4> 服务时间</h4>
+    <view class="flex row align-center">
     <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
       <view class="picker flex row">
         <text class="label" >服务开始日期: </text>
@@ -31,6 +43,74 @@
     <text class="label" >服务时长(月):</text>
     <input class="input-value" type="number" value="{{serveLength}}" placeholder="月" bindinput="bindInput" auto-focus/>
   </view>
+
+<h4> 服务地点</h4>
+<view class="flex row align-center">
+<text class="label" >市、区：</text>
+  <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+    <view class="picker">
+    {{region[0]}}，{{region[1]}}，{{region[2]}}
+    </view>
+  </picker>
+</view>
+<text class="label" >详细地址(请具体至**街**号(小区)**栋**室)：</text>
+<input class="input-value" value="{{inputAddress}}"/>
+
+<h4>被服务人信息</h4>
+  <view class="page-section">
+    <view class="label">姓名</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <input class="input-value" value="{{userName}}" />
+      </view>
+    </view>
+  </view>
+
+  <view class="page-section">
+    <view class="label">身份证号码</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <input class="input-value" value="{{userId}}" type="idcard" />
+      </view>
+    </view>
+  </view>
+
+  <view class="page-section">
+    <view class="label">电话</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <input class="input-value" value="{{userTel}}" type="number" />
+      </view>
+    </view>
+    </view>
+
+  <view class="page-section">
+    <view class="label">监护人</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <input class="input-value" value="{{sonName}}" />
+      </view>
+    </view>
+  </view>
+
+  <view class="page-section">
+    <view class="label">身份证号码</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <input class="input-value" value="{{sonId}}" type="idcard" />
+      </view>
+    </view>
+  </view>
+  
+    <view class="page-section">
+    <view class="label">电话</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <input class="input-value" value="{{sonTel}}" type="number" />
+      </view>
+    </view>
+  </view>
+
   <view class="flex row btn-grp"> 
     <button type="primary" bindtap="tapContract" bindtap="tapOk">确定</button>
   </view>

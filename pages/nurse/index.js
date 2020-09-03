@@ -8,21 +8,72 @@ Page({
    * 页面的初始数据
    */
   data: {
-    dailyItems: [
-      {value: 's1', name: '检查体温，肢体'},
-      {value: 's2', name: '检查褥疮'},
-      {value: 's3', name: '检查大小便'},
-      {value: 's4', name: '中午喂饭洗碗'},
-      {value: 's5', name: '晚上喂饭洗碗'},
-      {value: 's6', name: '清理卧室'},
-      {value: 's7', name: '洁面'},
+    workStatus: [{
+        value: 'ws1',
+        name: '请假'
+      },
+      {
+        value: 'ws2',
+        name: '休息'
+      },
+      {
+        value: 'ws3',
+        name: '辞职'
+      },
+      {
+        value: 'ws4',
+        name: '调岗'
+      }
     ],
-    weeklyItems: [
-      {value: 'ts1', name: '剪指甲(每周)'},
-      {value: 'ts2', name: '洗澡(2次每周)'},
-      {value: 'ts3', name: '洗衣服'},
-      {value: 'ts4', name: '集中时间外出'},
-      {value: 'ts5', name: '按摩活血'},
+    dailyItems: [{
+        value: 's1',
+        name: '检查体温，肢体'
+      },
+      {
+        value: 's2',
+        name: '检查褥疮'
+      },
+      {
+        value: 's3',
+        name: '检查大小便'
+      },
+      {
+        value: 's4',
+        name: '中午喂饭洗碗'
+      },
+      {
+        value: 's5',
+        name: '晚上喂饭洗碗'
+      },
+      {
+        value: 's6',
+        name: '清理卧室'
+      },
+      {
+        value: 's7',
+        name: '洁面'
+      },
+    ],
+    weeklyItems: [{
+        value: 'ts1',
+        name: '剪指甲(每周)'
+      },
+      {
+        value: 'ts2',
+        name: '洗澡(2次每周)'
+      },
+      {
+        value: 'ts3',
+        name: '洗衣服'
+      },
+      {
+        value: 'ts4',
+        name: '集中时间外出'
+      },
+      {
+        value: 'ts5',
+        name: '按摩活血'
+      },
     ],
     dayFinish: true,
     contracts: [],
@@ -39,9 +90,9 @@ Page({
       nurse: app.globalData.userInfo.extInfo._openid
     }).get()).data;
     const now = moment();
-    for(const item of contracts) {
+    for (const item of contracts) {
       const start = moment(item.startDate, 'YYYY-MM-DD');
-      const end = start.clone().add(item.serveLength, 'month'); 
+      const end = start.clone().add(item.serveLength, 'month');
       if (now.diff(start) > 0 && now.diff(end) < 0) {
         item.class = 'active';
         this.setData({
@@ -50,25 +101,25 @@ Page({
       }
     }
     const serves = (await db.collection('serve')
-      .where({
-        contract: this.data.contract._id,
-      })
-      .get())
+        .where({
+          contract: this.data.contract._id,
+        })
+        .get())
       .data;
     let dayFinish = false;
-    for(const serve of serves) {
+    for (const serve of serves) {
       if (serve.serve === 'day') {
         dayFinish = true;
         continue;
       }
-      for(const i of this.data.dailyItems) {
+      for (const i of this.data.dailyItems) {
         if (serve.serve === i.value) {
           i.startTime = serve.startTime;
           i.finishTime = serve.finishTime;
           continue;
         }
       }
-      for(const i of this.data.weeklyItems) {
+      for (const i of this.data.weeklyItems) {
         if (serve.serve === i.value) {
           i.startTime = serve.startTime;
           i.finishTime = serve.finishTime;
@@ -76,12 +127,13 @@ Page({
         }
       }
     }
-    
+
     this.setData({
       contracts,
       dayFinish,
       dailyItems: this.data.dailyItems,
       weeklyItems: this.data.weeklyItems,
+      workStatus: this.data.workStatus,
     });
   },
 
@@ -134,8 +186,8 @@ Page({
 
   },
 
-  async tapServe (e) {
-    var serve ;
+  async tapServe(e) {
+    var serve;
     for (const i of this.data.dailyItems) {
       if (i.value === e.currentTarget.dataset.serve) {
         serve = i;
@@ -148,7 +200,7 @@ Page({
         break;
       }
     }
-    if(!!serve.startTime) {
+    if (!!serve.startTime) {
       serve.finishTime = moment().format('YYYY-MM-DD');
     } else {
       serve.startTime = moment().format('YYYY-MM-DD');
@@ -161,13 +213,13 @@ Page({
           serve: serve.value
         })
         .update({
-          data:{
+          data: {
             finishTime: serve.finishTime
           }
         });
     } else {
       await db.collection('serve').add({
-        data:{
+        data: {
           contract: this.data.contract._id,
           serve: serve.value,
           startTime: serve.startTime,
@@ -180,11 +232,24 @@ Page({
     });
   },
 
+  async tapStatus(e) {
+    var status;
+    for (const i of this.data.workStatus) {
+      if (i.value === e.currentTarget.dataset.status) {
+        status = i;
+        break;
+      }
+    }
+    this.setData({
+      workStatus: this.data.workStatus
+    });
+  },
+
   async tapFinish(e) {
     const db = wx.cloud.database();
     const _ = db.command;
     await db.collection('serve').add({
-      data:{
+      data: {
         contract: this.data.contract._id,
         serve: 'day',
         finishTime: moment().format('YYYY-MM-DD'),
@@ -193,14 +258,14 @@ Page({
     const tomorrow = moment().add(1, 'day');
     const contract = this.data.contract;
     const contractDone = moment(contract.startTime, 'YYYY-MM-DD').add(contract.serveLength, 'month').diff(tomorrow) > 0;
-    
+
     await db.collection('contract')
       .where({
         _id: this.data.contract._id,
       })
       .update({
-        data:{
-          serveDay:  _.inc(1),
+        data: {
+          serveDay: _.inc(1),
           status: contractDone ? 'close' : 'open'
         }
       });

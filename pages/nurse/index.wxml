@@ -26,6 +26,13 @@
         <button size="mini" type="primary" bindtap="tapServe" data-serve="{{item.value}}" disabled="{{dayFinish || !!item.finishTime}}">{{item.startTime ? '结束' : '开始'}}</button>
       </view>
     </view> 
+    <view class="flex column serve-side">
+      <text class="title">工作状态</text>
+      <view class="flex row align-center" wx:for="{{workStatus}}" wx:key="value">
+        <text class="serve-item">{{item.name}}</text>
+        <button size="mini" type="primary" bindtap="tapStatus" data-serve="{{item.value}}">确定</button>
+      </view>
+    </view> 
   </view>
   <view class="flex row btn-grp">
     <button type="primary" bindtap="tapFinish" disabled="{{dayFinish}}" >结束工作</button>
