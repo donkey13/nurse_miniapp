@@ -160,7 +160,12 @@ Page({
     await db.collection('nurse').add({
       data:nurse
     });
-    await db.collection('userInfo').where({_id:app.globalData.userInfo.extInfo._id}).update({data:{type: 'nurse'}});
+    await db.collection('userInfo')
+      .where({_id:app.globalData.userInfo.extInfo._id})
+      .update({data:{
+        name: this.data.name,
+        type: 'nurse'
+      }});
     app.globalData.userInfo.extInfo.type = 'nurse';
 
     wx.navigateBack({

@@ -103,6 +103,7 @@ Page({
     let i = 0;
     for (const nurse of this.nurses) {
       const ui = (await userCollection.where({_openid: _.eq(nurse._openid)}).get()).data[0];
+      nurse.name = ui.name;
       markers.push({
         id: i,
         latitude: ui.location.latitude,

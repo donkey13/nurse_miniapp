@@ -9,6 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    name: '',
     address: '',
     serveDay: 0,
     balance: 0,
@@ -37,6 +38,7 @@ Page({
       serveDay += i.serveDay;
     }
     this.setData({
+      name: app.globalData.userInfo.extInfo.name,
       serveDay,
       contracts,
       address: app.globalData.userInfo.extInfo.address,
@@ -139,6 +141,15 @@ Page({
       .where({_id:app.globalData.userInfo.extInfo._id})
       .update({data:{level}});
     app.globalData.userInfo.extInfo.level = level;
+  },
+
+  bindInput(e) {
+    const db = wx.cloud.database();
+    db.collection('userInfo')
+      .where({_id:app.globalData.userInfo.extInfo._id})
+      .update({data:{name: e.detail.value}})
+      .then();
+    app.globalData.userInfo.extInfo.name = e.detail.value;
   },
 
   openmap() {

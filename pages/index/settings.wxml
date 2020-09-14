@@ -14,6 +14,10 @@
     </view>
   </view>
   <view class="flex row align-center">
+    <text class="label">姓名：</text>
+    <input class="input-value" value="{{name}}" placeholder="姓名" bindinput="bindInput" auto-focus/>
+  </view>
+  <view class="flex row align-center">
     <text class="label">我的地址：</text>
     <text style="flex: 1 1 auto" >{{address}}</text>
   </view>
