@@ -45,7 +45,6 @@ Page({
     }
   },
   getUserInfo: async function(e) {
-    console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     await app.getExtInfo();
     await this.checkNurse();
@@ -64,7 +63,6 @@ Page({
       let location = app.globalData.userInfo.extInfo.location;
       if (!location) {
         const res = await getLocation();
-        this.globalData.location = res;
         location = DB.GeoPoint(res.longitude, res.latitude);
         app.globalData.userInfo.extInfo.location = location;
         const db = wx.cloud.database();
@@ -76,6 +74,10 @@ Page({
           }})
           .then();
       }
+      this.setData({
+        longitude: location.longitude,
+        latitude: location.latitude
+      });
 
       const level = app.globalData.userInfo.extInfo.level || 'H';
       const items = this.data.items;

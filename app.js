@@ -36,10 +36,7 @@ App({
           });
         }
 
-        if (res.authSetting['scope.userLocation']) {
-          const res = await getLocation();
-          this.globalData.location = res;
-        } else {
+        if (!res.authSetting['scope.userLocation']) {
           wx.authorize({
             scope: 'scope.userLocation'
           });
