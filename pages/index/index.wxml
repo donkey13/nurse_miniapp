@@ -20,7 +20,7 @@
     </view>
     <view class="flex row align-center">
       <text class="label">我的地址：</text>
-      <text>{{userInfo.extInfo.address}}"</text>
+      <text>{{userInfo.extInfo.address}}</text>
     </view>
     <view class="flex row align-center">
       <text class="label">我的余额：</text>
@@ -33,13 +33,13 @@
 
     <view class="flex row align-center">
     <text class="label" >服务类型：</text>
-    <radio-group class="flex row align-center">
-      <label class="label" wx:for="{{items}}" wx:key="{{item.value}}">
+    <radio-group class="flex row align-center radio-group">
+      <label class="flex column align-center radio-item" wx:for="{{items}}" wx:key="{{item.value}}">
         <view class="radio">
-          <radio value="{{item.value}}" checked="true"/>
+          <radio value="{{item.value}}" checked="{{item.checked}}"/>
         </view>
         <view class="radioname">{{item.name}}</view>
-        </label>
+      </label>
     </radio-group> 
     </view>
 

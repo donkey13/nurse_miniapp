@@ -3,7 +3,7 @@
   <view>
     <text>已为您服务 {{serveDay}} 天。</text>
   </view>
-  <view class="flex column contrct-list"  style="flex: 1 1 auto">
+  <view class="flex column contrct-list" style="flex: 1 1 auto">
     <view>
       <text class="title">我的服务记录</text>
     </view>
@@ -15,7 +15,7 @@
   </view>
   <view class="flex row align-center">
     <text class="label">我的地址：</text>
-    <input value="{{address}}" bindinput="inputAddress" placeholder="我的位置"/>
+    <text style="flex: 1 1 auto" >{{address}}</text>
   </view>
   <view class="flex row align-center">
     <text class="label">我的余额：</text>
@@ -38,7 +38,7 @@
   </view>
   <view style="height: 2px; border-bottom: 1px solid gray;"></view>
   <view class="flex row btn-grp"> 
-    <button type="default">地址</button>
+    <button type="default" bindtap="openmap">地址</button>
     <button type="default">记录</button>
     <button type="default">评价</button>
     <button type="default">发票</button>

@@ -1,45 +1,13 @@
 <!--pages/nurse/index.wxml-->
-
-<view class="container content-start" >
-  <view class="flex column contrct-list">
-    <view>
-      <text class="title">客户</text>
+<view class="container">
+    <view >
+      <swiper indicator-dots="true" autoplay="true" >
+        <swiper-item>
+          <image src='/images/shouye.png'>公告</image>
+        </swiper-item>
+      </swiper>
     </view>
-    <view class="flex row contrct-item {{item.class}}" wx:for="{{contracts}}" wx:key="_id">
-      <text >{{item.address}}</text>
-      <text >{{item.startDate}}</text>
-      <text >{{item.serveLength}}个月</text>
+        <view class="flex column " style="flex: 1 1 auto" >
+      <map class="map" id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" markers="{{markers}}" bindmarkertap="markertap" show-location></map>
     </view>
-  </view>
-  <view class="flex row serve">
-    <view class="flex column serve-side" style="margin-right: 20rpx;">
-      <text class="title">服务</text>
-      <view class="flex row align-center" wx:for="{{dailyItems}}" wx:key="value">
-        <text class="serve-item" >{{item.name}}</text>
-        <button size="mini" type="primary" bindtap="tapServe" data-serve="{{item.value}}" disabled="{{dayFinish || !!item.finishTime}}">{{item.startTime ? '结束' : '开始'}}</button>
-      </view>
-    </view>
-    <view class="flex column serve-side">
-      <text class="title">临时服务</text>
-      <view class="flex row align-center" wx:for="{{weeklyItems}}" wx:key="value">
-        <text class="serve-item">{{item.name}}</text>
-        <button size="mini" type="primary" bindtap="tapServe" data-serve="{{item.value}}" disabled="{{dayFinish || !!item.finishTime}}">{{item.startTime ? '结束' : '开始'}}</button>
-      </view>
-    </view> 
-    <view class="flex column serve-side">
-      <text class="title">工作状态</text>
-      <view class="flex row align-center" wx:for="{{workStatus}}" wx:key="value">
-        <text class="serve-item">{{item.name}}</text>
-        <button size="mini" type="primary" bindtap="tapStatus" data-serve="{{item.value}}">确定</button>
-      </view>
-    </view> 
-  </view>
-  <view class="flex row btn-grp">
-    <button type="primary" bindtap="tapFinish" disabled="{{dayFinish}}" >结束工作</button>
-  </view>
-  <view style="flex: 1 1 auto; border-bottom: 1px solid gray;"></view>
-  <view class="flex row btn-grp"> 
-    <button type="default" bindtap="tapSetting" >我的</button>
-    <button type="default" disabled="true">邀请他人</button>
-  </view>
 </view>

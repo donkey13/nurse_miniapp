@@ -1,74 +1,11 @@
 /* pages/nurse/index.wxss */
-.container {
-  justify-content: center;
+
+image {
+  height: 100%;
+  width: 100%;
 }
 
-.serve {
-  border: 1px solid gray;
-  border-radius: 10rpx;
-  padding: 8rpx;
-}
-
-.serve-side {
+.map {
   flex: 1 1 auto;
-}
-
-.serve-side>view {
-  margin-bottom: 28rpx;
-}
-
-.main-service {
-  flex: 0 0 15%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 90rpx;
-}
-
-.other-service {
-  flex: 0 0 20%;
-  margin: 0 100rpx;
-  margin-bottom: 100rpx;
-  display: flex;
-  flex-flow: column;
-  justify-content: space-around;
-  align-items: center;
-  align-content: space-around;
-}
-
-.other-title {
-  margin-bottom: 10rpx;
-}
-
-.other-list {
-  flex: 1 1 auto;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
-  align-items: center;
-  align-content: space-around;
-}
-
-.serve-item {
-  flex: 1 1 auto;
-  line-height: 64rpx;
-}
-
-.contrct-list {
-  padding: 8rpx;
-  margin-bottom: 20rpx;
-  border: 1px solid gray;
-  border-radius: 10rpx;
-}
-
-.contrct-list>view:not(:last-child) {
-  margin-bottom: 16rpx;
-}
-
-.contrct-item {
-  justify-content: space-around;
-  background-color: lightgrey;
-}
-
-.contrct-item.active {
-  background-color: #07c160;
+  width: 100%;
 }

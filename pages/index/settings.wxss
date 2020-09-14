@@ -3,7 +3,10 @@ input {
   border-bottom: 1px solid gray;
   flex: 1 1 auto;
 } 
-
+.btn-img {
+  width: 44rpx;
+  height: 44rpx;
+}
 .contrct-list {
   padding: 8rpx;
   margin-bottom: 20rpx;

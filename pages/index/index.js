@@ -62,20 +62,51 @@ Page({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
       });
+
+      let location = app.globalData.userInfo.extInfo.location;
+      if (!location) {
+        wx.getLocation({
+          type: 'wgs84',
+          success: res => {
+              this.globalData.location = res;
+              location = DB.GeoPoint(res.longitude, res.latitude);
+              app.globalData.userInfo.extInfo.location = location;
+              const db = wx.cloud.database();
+              db.collection('userInfo')
+                .where({_id:app.globalData.userInfo.extInfo._id})
+                .update({data:{
+                  location,
+                  address: res.name,
+                }})
+                .then();
+          }
+        });
+      }
+
+      const level = app.globalData.userInfo.extInfo.level || 'H';
+      const items = this.data.items;
+      for (const item of items) {
+        item.checked = item.value === level;
+      }
+      this.setData({
+        items
+      });
       await this.getNurse();
     }
   },
   getNurse: async function() {
     const db = wx.cloud.database();
     const _ = db.command
+    const userCollection = db.collection('userInfo');
     this.nurses = (await db.collection('nurse').where({status: _.eq('available')}).get()).data;
     const markers = [];
     let i = 0;
     for (const nurse of this.nurses) {
+      const ui = (await userCollection.where({_openid: _.eq(nurse._openid)}).get()).data[0];
       markers.push({
         id: i,
-        latitude: nurse.location.latitude,
-        longitude: nurse.location.longitude,
+        latitude: ui.location.latitude,
+        longitude: ui.location.longitude,
         label: { content: nurse.name },
         width: 40,
         height: 40,
@@ -93,7 +124,7 @@ Page({
     this.setData({selectedNurse: nurse});
     wx.showModal({
       title: nurse.name,
-      content: '评价：4.8',
+      content: `评价：${nurse.rate} 体检：${nurse.health || '无'} 心理测试：${nurse.psychological || '无'} 从业年限：${nurse.hireDate || '无'}`,
       showCancel: false
     });
   },
@@ -118,15 +149,15 @@ Page({
       }
     }
   },
-  tapOtherServe: function(e) {
-    for(const i of this.data.tempItem){
-      this.data.items.push(i);
-    }
-    this.setData({
-      items: this.data.items,
-      hasOther: true
-    });
-  },
+  // tapOtherServe: function(e) {
+  //   for(const i of this.data.tempItem){
+  //     this.data.items.push(i);
+  //   }
+  //   this.setData({
+  //     items: this.data.items,
+  //     hasOther: true
+  //   });
+  // },
   tapContract: function(e) {
     wx.navigateTo({
       url: './contract',
