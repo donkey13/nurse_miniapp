@@ -1,3 +1,5 @@
+const { getLocation, getUserInfo } = require('./utils/util');
+
 //app.js
 App({
   onLaunch: async function () {
@@ -15,52 +17,56 @@ App({
 
     // 获取用户信息
     wx.getSetting({
-      success: res => {
+      success: async res => {
         if (res.authSetting['scope.userInfo']) {
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: async res => {
-              // 可以将 res 发送给后台解码出 unionId
-              this.globalData.userInfo = res.userInfo
-              await this.getExtInfo();
+          const userInfo = await getUserInfo(); 
+          
+          this.globalData.userInfo = userInfo
+          await this.getExtInfo();
 
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res)
-              }
-            }
-          })
+          // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+          // 所以此处加入 callback 以防止这种情况
+          if (this.userInfoReadyCallback) {
+            this.userInfoReadyCallback(res)
+          }
         } else {
-          wx.authorize({ scope: 'scope.userInfo' });
+          wx.authorize({
+            scope: 'scope.userInfo'
+          });
         }
 
         if (res.authSetting['scope.userLocation']) {
-          wx.getLocation({
-            type: 'wgs84',
-            success: res => {
-                this.globalData.location = res;
-            }
+          const res = await getLocation();
+          this.globalData.location = res;
+        } else {
+          wx.authorize({
+            scope: 'scope.userLocation'
           });
-        } else  {
-          wx.authorize({ scope: 'scope.userLocation' });
         }
       }
     });
-// wx.cloud.DYNAMIC_CURRENT_ENV
-    wx.cloud.init({env: 'dev-za11t'});
+    // wx.cloud.DYNAMIC_CURRENT_ENV
+    wx.cloud.init({
+      env: 'dev-za11t'
+    });
   },
   getExtInfo: async function () {
     const db = wx.cloud.database();
     let userInfo = (await db.collection('userInfo').get()).data[0];
     if (!userInfo) {
+      const res = await getLocation();
       await db.collection('userInfo').add({
-        data:{ 
+        data: {
+          location: DB.GeoPoint(res.latitude, res.latitude),
+          address: res.name,
+          name: this.globalData.userInfo.nickName,
           type: 'normal',
           balance: 0
-         }
+        }
       });
       userInfo = (await db.collection('userInfo').get()).data[0];
+      this.globalData.userInfo.extInfo = userInfo;
     }
     this.globalData.userInfo.extInfo = userInfo;
   },

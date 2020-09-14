@@ -1,4 +1,5 @@
 //index.js
+const { getLocation } = require('../../utils/util');
 //获取应用实例
 const app = getApp()
 
@@ -29,16 +30,13 @@ Page({
       }
     } else {
       // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: async res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          });
-          await this.getNurse();
-        }
-      })
+      const userInfo = await getUserInfo();
+      app.globalData.userInfo = userInfo
+      this.setData({
+        userInfo: userInfo,
+        hasUserInfo: true
+      });
+      await this.getNurse();
     }
   },
   onShow: async function () {
@@ -65,22 +63,18 @@ Page({
 
       let location = app.globalData.userInfo.extInfo.location;
       if (!location) {
-        wx.getLocation({
-          type: 'wgs84',
-          success: res => {
-              this.globalData.location = res;
-              location = DB.GeoPoint(res.longitude, res.latitude);
-              app.globalData.userInfo.extInfo.location = location;
-              const db = wx.cloud.database();
-              db.collection('userInfo')
-                .where({_id:app.globalData.userInfo.extInfo._id})
-                .update({data:{
-                  location,
-                  address: res.name,
-                }})
-                .then();
-          }
-        });
+        const res = await getLocation();
+        this.globalData.location = res;
+        location = DB.GeoPoint(res.longitude, res.latitude);
+        app.globalData.userInfo.extInfo.location = location;
+        const db = wx.cloud.database();
+        db.collection('userInfo')
+          .where({_id:app.globalData.userInfo.extInfo._id})
+          .update({data:{
+            location,
+            address: res.name,
+          }})
+          .then();
       }
 
       const level = app.globalData.userInfo.extInfo.level || 'H';

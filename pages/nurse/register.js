@@ -1,4 +1,5 @@
 // pages/nurse/register.js
+const { getLocation } = require('../../utils/util');
 var app = getApp();
 
 Page({
@@ -18,15 +19,11 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    wx.getLocation({
-      type: 'wgs84',
-      success: (res) => {
-        this.setData({
-          latitude : res.latitude,
-          longitude : res.longitude
-        }); 
-      }
+  onLoad: async function (options) {
+    const res = await getLocation();
+    this.setData({
+      latitude : res.latitude,
+      longitude : res.longitude
      });
   },
 

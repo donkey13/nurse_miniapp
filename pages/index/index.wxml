@@ -34,7 +34,7 @@
     <view class="flex row align-center">
     <text class="label" >服务类型：</text>
     <radio-group class="flex row align-center radio-group">
-      <label class="flex column align-center radio-item" wx:for="{{items}}" wx:key="{{item.value}}">
+      <label class="flex column align-center radio-item" wx:for="{{items}}" wx:key="value">
         <view class="radio">
           <radio value="{{item.value}}" checked="{{item.checked}}"/>
         </view>

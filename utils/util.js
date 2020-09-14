@@ -14,6 +14,29 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
+const getLocation = () => {
+  return new Promise((resolve, reject)=>{
+    wx.getLocation({
+      type: 'wgs84',
+      success: async (res) => {
+        resolve(res);
+      }
+    });
+  });
+}
+
+const getUserInfo = () => {
+  return new Promise((resolve, reject)=>{
+    wx.getUserInfo({
+      success: res => {
+        resolve(res.userInfo);
+      }
+    });
+  });
+}
+
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  getLocation: getLocation,
+  getUserInfo: getUserInfo,
 }
