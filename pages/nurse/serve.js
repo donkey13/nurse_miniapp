@@ -207,7 +207,7 @@ Page({
     }
     const db = wx.cloud.database();
     if (!!serve.finishTime) {
-      await db.('serve')
+      await db.collection('serve')
         .where({
           contract: this.data.contract._id,
           serve: serve.value
