@@ -2,6 +2,7 @@
 <view class="container">
   <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
   <block wx:else>
+    <view class="content">
     <view >
       <swiper indicator-dots="true" autoplay="true" >
 
@@ -35,6 +36,7 @@
         <text class="label" >选择护工：</text>
         <text>{{selectedNurse.name}}</text>
       </view>
+    </view>
     </view>
     <view class="navbar flex row"> 
       <button class="nav-btn" type="default" plain="true" style="border: none;" bindtap="tapContract" >预约</button>

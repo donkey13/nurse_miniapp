@@ -13,6 +13,7 @@ Page({
     serveLength: 1,
     inputAddress:'',
     selectedNurse: {},
+    type: 'long',
     terms: `
 <div class="div_class">
   <h4>我们提供的服务类型为:</h4>
@@ -44,7 +45,7 @@ Page({
    */
   onLoad: function (options) {
     const ch = this.getOpenerEventChannel();
-    ch.on('selected-nurse', data =>{      console.log(data);
+    ch.on('selected-nurse', data =>{
       this.setData({
         selectedNurse: data
       })
@@ -103,20 +104,53 @@ Page({
   onShareAppMessage: function () {
 
   },
-  bindDateChange: function(e) {
+  bindDateChange(e) {
     this.setData({
       date: e.detail.value
     });
   },
-  bindInput: function(e) {
+  bindInput(e) {
     this.setData({
       serveLength: e.detail.value
     });
   },
-  bindAddressInput: function(e) {
+  bindAddressInput(e) {
     this.setData({
       inputAddress: e.detail.value
     });
+  },
+  bindNameInput(e) {
+    this.setData({
+      userName: e.detail.value
+    });
+  },
+  bindIdInput(e) {
+    this.setData({
+      userId: e.detail.value
+    });
+  },
+  bindPhoneInput(e) {
+    this.setData({
+      userTel: e.detail.value
+    });
+  },
+  bindSonNameInput(e) {
+    this.setData({
+      sonName: e.detail.value
+    });
+  },
+  bindSonIdInput(e) {
+    this.setData({
+      sonId: e.detail.value
+    });
+  },
+  bindSonPhoneInput(e) {
+    this.setData({
+      sonTel: e.detail.value
+    });
+  },
+  radioChange(e) {
+    this.setData({type: e.detail.value});
   },
   tapOk: async function(e) {
     if (this.data.serveLength < 1) {
@@ -139,10 +173,17 @@ Page({
       data:{ 
         startDate: this.data.date,
         serveLength: this.data.serveLength,
+        type: this.data.type,
         customer: app.globalData.userInfo.extInfo._openid,
         nurse: this.data.selectedNurse._openid,
-        address: app.globalData.userInfo.extInfo.address,
-        serveDay: 0
+        address: this.data.inputAddress,
+        serveDay: 0,
+        userName: this.data.userName,
+        userId: this.data.userId,
+        userTel: this.data.userTel,
+        sonName: this.data.sonName,
+        sonId: this.data.sonId,
+        sonTel: this.data.sonTel,
        }
     });
     await db.collection('userInfo').where({_id:app.globalData.userInfo.extInfo._id}).update({data:{balance: balance}});
