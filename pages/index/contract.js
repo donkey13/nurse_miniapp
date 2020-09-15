@@ -14,7 +14,7 @@ Page({
     inputAddress:'',
     selectedNurse: {},
     terms: `
-    <div class="div_class">
+<div class="div_class">
   <h4>我们提供的服务类型为:</h4>
   <p>一般家务</p>
   <p>老人护理<p>
@@ -44,7 +44,7 @@ Page({
    */
   onLoad: function (options) {
     const ch = this.getOpenerEventChannel();
-    ch.on('selected-nurse', data =>{
+    ch.on('selected-nurse', data =>{      console.log(data);
       this.setData({
         selectedNurse: data
       })

@@ -10,6 +10,7 @@ page {
   align-items: stretch;
   justify-content: space-between;
   box-sizing: border-box;
+  background-color: #e2e2e2;
 } 
 
 .container.content-start {
@@ -48,8 +49,14 @@ page {
 }
 
 text.title {
-  font-size: large;
+  font-size: x-large;
   color: #07c160;
+  margin-bottom: 20rpx;
+}
+
+
+text.subtitle {
+  font-size: large;
   margin-bottom: 20rpx;
 }
 
@@ -58,4 +65,28 @@ text.label {
   line-height: 38rpx;
   font-size: small;
   color: darkgray;
+}
+
+.list {
+  background-color: white;
+  margin-bottom: 20rpx;
+  padding: 10rpx 20rpx;
+}
+
+.list > .list-item {
+  padding: 20rpx;
+}
+
+.list > .list-item:not(:last-child) {
+  border-bottom: 2rpx solid #e2e2e2;
+}
+
+.navbar {
+  background-color: white;
+}
+
+.navbar > button.nav-btn {
+  flex: 1 1 auto;
+  margin: 0;
+  border: none;
 }

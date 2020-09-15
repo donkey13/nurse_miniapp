@@ -13,11 +13,6 @@ Page({
     markers: [],
     hasOther: false,
     selectedNurse: {},
-    items: [
-      {value: 'H', name: '老人护理', checked: 'true'},
-      {value: 'B', name: '半自理病人护理'},
-      {value: 'N', name: '不能自理病人护理'}
-    ]
   },
   onLoad: async function () {
     if (app.globalData.userInfo) {
@@ -79,14 +74,6 @@ Page({
         latitude: location.latitude
       });
 
-      const level = app.globalData.userInfo.extInfo.level || 'H';
-      const items = this.data.items;
-      for (const item of items) {
-        item.checked = item.value === level;
-      }
-      this.setData({
-        items
-      });
       await this.getNurse();
     }
   },
@@ -99,12 +86,12 @@ Page({
     let i = 0;
     for (const nurse of this.nurses) {
       const ui = (await userCollection.where({_openid: _.eq(nurse._openid)}).get()).data[0];
-      nurse.name = ui.name;
+      nurse.userInfo = ui;
       markers.push({
         id: i,
         latitude: ui.location.latitude,
         longitude: ui.location.longitude,
-        label: { content: nurse.name },
+        label: { content: nurse.userInfo.name },
         width: 40,
         height: 40,
         iconPath: '/images/care.png'
@@ -120,8 +107,8 @@ Page({
     const nurse = this.nurses[e.markerId];
     this.setData({selectedNurse: nurse});
     wx.showModal({
-      title: nurse.name,
-      content: `评价：${nurse.rate} 体检：${nurse.health || '无'} 心理测试：${nurse.psychological || '无'} 从业年限：${nurse.hireDate || '无'}`,
+      title: nurse.userInfo.name,
+      content: `评价：${nurse.rate || '0'} 体检：${nurse.health || '无'} 心理测试：${nurse.psychological || '无'} 从业年限：${nurse.hireDate || '无'}`,
       showCancel: false
     });
   },
@@ -135,26 +122,7 @@ Page({
       url: './tempservice',
     });
   },
-  checkboxChange(e) {
-    for(const i of this.data.items) {
-      i.checked = false;
-      for(const v of e.detail.value) {
-        if (i.value === v) {
-          i.checked = true;
-          break;
-        }
-      }
-    }
-  },
-  // tapOtherServe: function(e) {
-  //   for(const i of this.data.tempItem){
-  //     this.data.items.push(i);
-  //   }
-  //   this.setData({
-  //     items: this.data.items,
-  //     hasOther: true
-  //   });
-  // },
+
   tapContract: function(e) {
     wx.navigateTo({
       url: './contract',

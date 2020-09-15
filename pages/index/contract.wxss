@@ -1,11 +1,15 @@
 /* pages/index/contract.wxss */
-.label {
+.row > .label {
   flex: 0 0 100px;
 }
 
 .input-value {
   border-bottom: 1px solid gray;
   flex: 1 1 auto;
+}
+
+.input-list>view:not(:last-child) {
+  margin-bottom: 16rpx;
 }
 
 picker {
