@@ -1,4 +1,7 @@
 // pages/nurse/index.js
+const moment = require('../../utils/moment.min.js');
+var app = getApp();
+
 Page({
 
   /**
@@ -18,8 +21,12 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-
+  onLoad: async function (options) {
+    this.setData({
+      latitude: app.globalData.userInfo.extInfo.location.latitude,
+      longitude: app.globalData.userInfo.extInfo.location.longitude,
+    })
+    await this.getContract();
   },
 
   /**
@@ -81,4 +88,55 @@ Page({
       url: './settings',
     })
   },
+  async getContract() {
+    const db = wx.cloud.database();
+    const _ = db.command
+    const userCollection = db.collection('userInfo');
+    const contracts = (await db.collection('contract').where({ nurse: _.or(_.eq(app.globalData.userInfo.extInfo._openid), _.eq(null)), status: 'open' }).get()).data;
+    this.contracts = [];
+    const now = moment();
+    const markers = [];
+    const cus = {};
+
+    let i = 0;
+    for (const contract of contracts) {
+      if (!!cus[contract.customer]) {
+        continue;
+      }
+      const start = moment(contract.startDate, 'YYYY-MM-DD');
+      const end = start.clone().add(contract.serveLength, 'month');
+      if (now.diff(start) > 0 && now.diff(end) < 0) {
+        this.contracts.push(contract);
+        cus[contract.customer] = contract;
+        const ui = (await userCollection.where({ _openid: _.eq(contract.customer) }).get()).data[0];
+        contract.customerInfo = ui;
+        markers.push({
+          id: i,
+          latitude: ui.location.latitude,
+          longitude: ui.location.longitude,
+          label: { content: contract.customerInfo.name },
+          width: 40,
+          height: 40,
+          iconPath: '/images/feed.jpg'
+        });
+        i++;
+      }
+    }
+    console.log(markers);
+    this.setData({
+      markers
+    });
+  },
+  markertap(e) {
+    const contract = this.contracts[e.markerId];
+    wx.showModal({
+      title: contract.customerInfo.name,
+      content: `地址：${contract.address} 服务时间：${contract.startDate} 服务时长：${contract.serveLength}`,
+      showCancel: false
+    });
+  },
+
+  tapManager(e) {
+    
+  }
 })

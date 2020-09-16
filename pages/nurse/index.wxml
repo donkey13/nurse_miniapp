@@ -15,5 +15,6 @@
 	<view class="navbar flex row">
 		<button class="nav-btn" type="default" plain="true" style="border: none;" bindtap="tapServe">服务</button>
 		<button class="nav-btn" type="default" plain="true" style="border: none;" bindtap="tapSetting">我的</button>
+    <button class="nav-btn" type="default" plain="true" style="border: none;" bindtap="tapManager" disabled="true">管理小组</button>
 	</view>
 </view>
