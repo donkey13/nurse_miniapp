@@ -7,6 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    name: '',
+    phone: '',
     workStatus: [{
       value: 'available',
       name: '上岗'
@@ -34,7 +36,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.setData({
+      name: app.globalData.userInfo.extInfo.name,
+      phone: app.globalData.userInfo.extInfo.phone,
+    })
   },
 
   /**
@@ -110,5 +115,21 @@ Page({
       app.globalData.userInfo.extInfo.type = 'normal';
       wx.redirectTo({ url: '../index/index' });
     }
+  },
+  bindNameInput(e) {
+    const db = wx.cloud.database();
+    db.collection('userInfo')
+      .where({ _id: app.globalData.userInfo.extInfo._id })
+      .update({ data: { name: e.detail.value } })
+      .then();
+    app.globalData.userInfo.extInfo.name = e.detail.value;
+  },
+  bindPhoneInput(e) {
+    const db = wx.cloud.database();
+    db.collection('userInfo')
+      .where({ _id: app.globalData.userInfo.extInfo._id })
+      .update({ data: { phone: e.detail.value } })
+      .then();
+    app.globalData.userInfo.extInfo.phone = e.detail.value;
   },
 });

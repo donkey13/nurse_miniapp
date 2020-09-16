@@ -1,6 +1,21 @@
 <!--pages/nurse/settings.wxml-->
 <view class="container">
-	<view class="content">
+	<view class="content content-start">
+		<view class="list">
+			<view class="list-item">
+				<text class="title">个人信息</text>
+			</view>
+			<view class="list-item">
+				<view class="flex row align-center">
+					<text class="label">姓名：</text>
+					<input class="input-value" value="{{name}}" placeholder="姓名" bindinput="bindNameInput" />
+				</view>
+				<view class="flex row align-center">
+					<text class="label">电话：</text>
+					<input class="input-value" value="{{phone}}" placeholder="电话" bindinput="bindPhoneInput" />
+				</view>
+			</view>
+		</view>
 		<view class="list">
 			<view class="list-item">
 				<text class="title">工作状态</text>

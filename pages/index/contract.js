@@ -186,10 +186,11 @@ Page({
         sonTel: this.data.sonTel,
       }
     });
-    await db.collection('userInfo').where({ _id: app.globalData.userInfo.extInfo._id }).update({ data: { balance: balance } });
+    await db.collection('userInfo')
+      .where({ _id: app.globalData.userInfo.extInfo._id })
+      .update({ data: { balance: balance } });
     app.globalData.userInfo.extInfo.balance = balance;
     wx.navigateBack({
-      complete: (res) => { },
     })
   }
 })
