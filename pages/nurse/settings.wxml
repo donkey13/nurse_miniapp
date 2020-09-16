@@ -1,0 +1,16 @@
+<!--pages/nurse/settings.wxml-->
+<view class="container">
+	<view class="content">
+		<view class="list">
+			<view class="list-item">
+				<text class="title">工作状态</text>
+			</view>
+			<view class="list-item work-status">
+				<view class="flex row align-center" wx:for="{{workStatus}}" wx:key="value">
+					<text class="serve-item">{{item.name}}</text>
+					<button size="mini" type="primary" bindtap="tapStatus" data-status="{{item.value}}">确定</button>
+				</view>
+			</view>
+		</view>
+	</view>
+</view>

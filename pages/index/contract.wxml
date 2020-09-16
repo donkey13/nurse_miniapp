@@ -1,141 +1,146 @@
 <!--pages/index/contract.wxml-->
-<view class="container ">
-	<scroll-view scroll-y="true" class="flex column" style="flex: 1 1 auto">
-		<view class="content">
-			<view class="list">
-				<view class="list-item">
-					<text class="title">服务条款</text>
-				</view>
-				<view class="list-item page-content">
+<view class="container">
+	<view class="content content-start">
+		<view class="list">
+			<view class="list-item">
+				<text class="title">服务条款</text>
+			</view>
+			<view class="list-item page-content">
+				<scroll-view scroll-y="true" style="height: 160rpx;">
 					<rich-text nodes="{{terms}}"></rich-text>
-				</view>
+				</scroll-view>
 			</view>
-			<view class="list">
-				<view class="list-item">
-					<text class="title">收费标准</text>
-				</view>
-				<view class="list-item flex column">
-					<view class="flex row align-center">
-						<text class="label" >服务费：</text>
-						<text>￥1800元人民币/月</text>
-					</view>
-					<view class="flex row align-center">
-						<text class="label" >餐费预付款：</text>
-						<text>￥600元人民币/月(多退少补)</text>
-					</view>
-				</view>
+		</view>
+		<view class="list">
+			<view class="list-item">
+				<text class="title">收费标准</text>
 			</view>
-			<view class="list">
-				<view class="list-item">
-					<text class="title">服务确认</text>
+			<view class="list-item flex column">
+				<view class="flex row align-center">
+					<text class="label" >服务费：</text>
+					<text>￥1800元人民币/月</text>
 				</view>
-				<view class="list-item flex column input-list">
-					<text class="subtitle">服务内容</text>
-					<view class="flex row align-center">
-						<text class="label" >服务类型：</text>
-						<text wx:if="{{userInfo.extInfo.level === 'H'}}">老人护理</text>
-						<text wx:elif="{{userInfo.extInfo.level === 'B'}}">半自理病人护理</text>
-						<text wx:elif="{{userInfo.extInfo.level === 'N'}}">不能自理病人护理</text>
-						<text wx:else>一般家务</text>
-					</view>
-					<view class="flex row align-center">
-						<text class="label" >服务类型：</text>
-						<radio-group bindchange="radioChange">
-							<label class="radio">
-								<radio value="long" checked />长包服务
-							</label>
-							<label class="radio">
-								<radio value="temp" />临时服务
-							</label>
-						</radio-group>
-					</view>
-				</view>
-				<view class="list-item flex column">
-					<text class="subtitle">服务人员信息</text>
-					<view class="flex row align-center">
-						<text class="label" >选中的护工：</text>
-						<text>{{selectedNurse.userInfo.name}}</text>
-					</view>
-					<view class="flex row align-center">
-						<text class="label" >身份证号：</text>
-						<text>{{selectedNurse.userInfo.id}}</text>
-					</view>
-					<view class="flex row align-center">
-						<text class="label" >电话：</text>
-						<text>{{selectedNurse.userInfo.phone}}</text>
-					</view>
-				</view>
-				<view class="list-item flex column input-list">
-					<text class="subtitle">服务时间</text>
-					<view class="flex row align-center">
-						<picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
-							<view class="picker flex row">
-								<text class="label" >服务开始日期: </text>
-								<text class="input-value">{{date}}</text>
-							</view>
-						</picker>
-					</view>
-					<view class="flex row align-center">
-						<text class="label" >服务时长({{type==='long'?'月':'天'}}):</text>
-						<input class="input-value" type="number" value="{{serveLength}}" placeholder="月" bindinput="bindInput" auto-focus />
-					</view>
-				</view>
-				<view class="list-item flex column input-list">
-					<text class="subtitle">服务地点</text>
-					<view class="flex row align-center">
-						<text class="label" >地址:</text>
-						<text>{{userInfo.extInfo.address}}</text>
-					</view>
-					<view class="flex row align-center">
-						<text class="label" >市、区：</text>
-						<picker class="input-value" mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
-							<view class="picker">
-								{{region[0]}}，{{region[1]}}，{{region[2]}}
-							</view>
-						</picker>
-					</view>
-					<view class="flex column">
-						<text class="label" >详细地址(请具体至**街**号(小区)**栋**室)：</text>
-						<input class="input-value" value="{{inputAddress}}" />
-					</view>
-				</view>
-
-				<view class="list-item flex column input-list">
-					<text class="subtitle">被服务人信息</text>
-					<view class="flex column">
-						<text class="label" >姓名：{{userName}}</text>
-						<input class="input-value" value="{{userName}}" bindinput="bindNameInput" />
-					</view>
-
-					<view class="flex column">
-						<text class="label" >身份证号码：</text>
-						<input class="input-value" value="{{userId}}" type="idcard" bindinput="bindIdInput"/>
-					</view>
-
-					<view class="flex column">
-						<text class="label" >电话：</text>
-						<input class="input-value" value="{{userTel}}" type="number" bindinput="bindPhoneInput" />
-					</view>
-
-					<view class="flex column">
-						<text class="label" >监护人：</text>
-						<input class="input-value" value="{{sonName}}" bindinput="bindSonNameInput" />
-					</view>
-
-					<view class="flex column">
-						<text class="label" >身份证号码：</text>
-						<input class="input-value" value="{{sonId}}" type="idcard" bindinput="bindSonIdInput" />
-					</view>
-
-					<view class="flex column">
-						<text class="label" >电话：</text>
-						<input class="input-value" value="{{sonTel}}" type="number" bindinput="bindSonPhoneInput" />
-					</view>
-
+				<view class="flex row align-center">
+					<text class="label" >餐费预付款：</text>
+					<text>￥600元人民币/月(多退少补)</text>
 				</view>
 			</view>
 		</view>
-	</scroll-view>
+		<view class="list">
+			<view class="list-item">
+				<text class="title">服务确认</text>
+			</view>
+			<view >
+				<scroll-view scroll-y="true" style="height: 480rpx;">
+					<view class="list" style="padding: 0px;">
+						<view class="list-item flex column input-list">
+							<text class="subtitle">服务内容</text>
+							<view class="flex row align-center">
+								<text class="label" >服务类型：</text>
+								<text wx:if="{{userInfo.extInfo.level === 'H'}}">老人护理</text>
+								<text wx:elif="{{userInfo.extInfo.level === 'B'}}">半自理病人护理</text>
+								<text wx:elif="{{userInfo.extInfo.level === 'N'}}">不能自理病人护理</text>
+								<text wx:else>一般家务</text>
+							</view>
+							<view class="flex row align-center">
+								<text class="label" >服务类型：</text>
+								<radio-group bindchange="radioChange">
+									<label class="radio">
+										<radio value="long" checked />长包服务
+									</label>
+									<label class="radio">
+										<radio value="temp" />临时服务
+									</label>
+								</radio-group>
+							</view>
+						</view>
+						<view class="list-item flex column">
+							<text class="subtitle">服务人员信息</text>
+							<view class="flex row align-center">
+								<text class="label" >选中的护工：</text>
+								<text>{{selectedNurse.userInfo.name}}</text>
+							</view>
+							<view class="flex row align-center">
+								<text class="label" >身份证号：</text>
+								<text>{{selectedNurse.userInfo.id}}</text>
+							</view>
+							<view class="flex row align-center">
+								<text class="label" >电话：</text>
+								<text>{{selectedNurse.userInfo.phone}}</text>
+							</view>
+						</view>
+						<view class="list-item flex column input-list">
+							<text class="subtitle">服务时间</text>
+							<view class="flex row align-center">
+								<picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
+									<view class="picker flex row">
+										<text class="label" >服务开始日期: </text>
+										<text class="input-value">{{date}}</text>
+									</view>
+								</picker>
+							</view>
+							<view class="flex row align-center">
+								<text class="label" >服务时长({{type==='long'?'月':'天'}}):</text>
+								<input class="input-value" type="number" value="{{serveLength}}" placeholder="月" bindinput="bindInput" />
+							</view>
+						</view>
+						<view class="list-item flex column input-list">
+							<text class="subtitle">服务地点</text>
+							<view class="flex row align-center">
+								<text class="label" >地址:</text>
+								<text>{{userInfo.extInfo.address}}</text>
+							</view>
+							<view class="flex row align-center">
+								<text class="label" >市、区：</text>
+								<picker class="input-value" mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+									<view class="picker">
+										{{region[0]}}，{{region[1]}}，{{region[2]}}
+									</view>
+								</picker>
+							</view>
+							<view class="flex column">
+								<text class="label" >详细地址(请具体至**街**号(小区)**栋**室)：</text>
+								<input class="input-value" value="{{inputAddress}}" />
+							</view>
+						</view>
+						<view class="list-item flex column input-list">
+							<text class="subtitle">被服务人信息</text>
+							<view class="flex row align-center">
+								<text class="label" >姓名：{{userName}}</text>
+								<input class="input-value" value="{{userName}}" bindinput="bindNameInput" />
+							</view>
+
+							<view class="flex row align-center">
+								<text class="label" >身份证号码：</text>
+								<input class="input-value" value="{{userId}}" type="idcard" bindinput="bindIdInput" />
+							</view>
+
+							<view class="flex row align-center">
+								<text class="label" >电话：</text>
+								<input class="input-value" value="{{userTel}}" type="number" bindinput="bindPhoneInput" />
+							</view>
+
+							<view class="flex row align-center">
+								<text class="label" >监护人：</text>
+								<input class="input-value" value="{{sonName}}" bindinput="bindSonNameInput" />
+							</view>
+
+							<view class="flex row align-center">
+								<text class="label" >身份证号码：</text>
+								<input class="input-value" value="{{sonId}}" type="idcard" bindinput="bindSonIdInput" />
+							</view>
+
+							<view class="flex row align-center">
+								<text class="label" >电话：</text>
+								<input class="input-value" value="{{sonTel}}" type="number" bindinput="bindSonPhoneInput" />
+							</view>
+
+						</view>
+					</view>
+				</scroll-view>
+			</view>
+		</view>
+	</view>
 
 	<view class="navbar flex row">
 		<button type="primary" bindtap="tapContract" bindtap="tapOk">提交订单</button>

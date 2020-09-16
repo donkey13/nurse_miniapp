@@ -9,9 +9,9 @@ Page({
    */
   data: {
     userInfo: {},
-    date:'',
+    date: '',
     serveLength: 1,
-    inputAddress:'',
+    inputAddress: '',
     selectedNurse: {},
     type: 'long',
     terms: `
@@ -32,12 +32,12 @@ Page({
 </div>
     `,
     region: ['陕西省', '宝鸡市', '渭滨区'],
-    userName:'',
-    userId:'',
-    userTel:'',
-    sonName:'',
-    sonId:'',
-    sonTel:'',
+    userName: '',
+    userId: '',
+    userTel: '',
+    sonName: '',
+    sonId: '',
+    sonTel: '',
   },
 
   /**
@@ -45,7 +45,7 @@ Page({
    */
   onLoad: function (options) {
     const ch = this.getOpenerEventChannel();
-    ch.on('selected-nurse', data =>{
+    ch.on('selected-nurse', data => {
       this.setData({
         selectedNurse: data
       })
@@ -150,9 +150,9 @@ Page({
     });
   },
   radioChange(e) {
-    this.setData({type: e.detail.value});
+    this.setData({ type: e.detail.value });
   },
-  tapOk: async function(e) {
+  tapOk: async function (e) {
     if (this.data.serveLength < 1) {
       wx.showToast({
         title: '服务时长不合法。',
@@ -170,7 +170,7 @@ Page({
     }
     const db = wx.cloud.database();
     await db.collection('contract').add({
-      data:{ 
+      data: {
         startDate: this.data.date,
         serveLength: this.data.serveLength,
         type: this.data.type,
@@ -184,12 +184,12 @@ Page({
         sonName: this.data.sonName,
         sonId: this.data.sonId,
         sonTel: this.data.sonTel,
-       }
+      }
     });
-    await db.collection('userInfo').where({_id:app.globalData.userInfo.extInfo._id}).update({data:{balance: balance}});
+    await db.collection('userInfo').where({ _id: app.globalData.userInfo.extInfo._id }).update({ data: { balance: balance } });
     app.globalData.userInfo.extInfo.balance = balance;
     wx.navigateBack({
-      complete: (res) => {},
+      complete: (res) => { },
     })
   }
 })

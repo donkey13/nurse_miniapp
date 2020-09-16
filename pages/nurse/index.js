@@ -9,9 +9,9 @@ Page({
     longitude: 107.13,
     markers: [],
     items: [
-      {value: 'H', name: '老人护理', checked: 'true'},
-      {value: 'B', name: '半自理病人护理'},
-      {value: 'N', name: '不能自理病人护理'}
+      { value: 'H', name: '老人护理', checked: 'true' },
+      { value: 'B', name: '半自理病人护理' },
+      { value: 'N', name: '不能自理病人护理' }
     ]
   },
 
@@ -69,5 +69,16 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  tapServe(e) {
+    wx.navigateTo({
+      url: './serve',
+    })
+  },
+  tapSetting() {
+    wx.navigateTo({
+      url: './settings',
+    })
+  },
 })

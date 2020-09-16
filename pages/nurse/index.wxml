@@ -1,13 +1,19 @@
 <!--pages/nurse/index.wxml-->
 <view class="container">
-    <view >
-      <swiper indicator-dots="true" autoplay="true" >
-        <swiper-item>
-          <image src='/images/shouye.png'>公告</image>
-        </swiper-item>
-      </swiper>
-    </view>
-        <view class="flex column " style="flex: 1 1 auto" >
-      <map class="map" id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" markers="{{markers}}" bindmarkertap="markertap" show-location></map>
-    </view>
+	<view class="content">
+		<view>
+			<swiper indicator-dots="true" autoplay="true">
+				<swiper-item>
+					<image src='/images/shouye.png'>公告</image>
+				</swiper-item>
+			</swiper>
+		</view>
+		<view class="flex column " style="flex: 1 1 auto">
+			<map class="map" id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" markers="{{markers}}" bindmarkertap="markertap" show-location></map>
+		</view>
+	</view>
+	<view class="navbar flex row">
+		<button class="nav-btn" type="default" plain="true" style="border: none;" bindtap="tapServe">服务</button>
+		<button class="nav-btn" type="default" plain="true" style="border: none;" bindtap="tapSetting">我的</button>
+	</view>
 </view>

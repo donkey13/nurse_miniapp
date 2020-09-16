@@ -17,7 +17,7 @@ Page({
   onLoad: async function () {
     if (app.globalData.userInfo) {
       await this.checkNurse();
-    } else if (this.data.canIUse){
+    } else if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = async res => {
@@ -39,14 +39,14 @@ Page({
       await this.checkNurse();
     }
   },
-  getUserInfo: async function(e) {
+  getUserInfo: async function (e) {
     app.globalData.userInfo = e.detail.userInfo
     await app.getExtInfo();
     await this.checkNurse();
   },
   async checkNurse() {
     if (app.globalData.userInfo.extInfo.type === 'nurse') {
-      wx.navigateTo({
+      wx.redirectTo({
         url: '../nurse/index',
       })
     } else {
@@ -62,11 +62,13 @@ Page({
         app.globalData.userInfo.extInfo.location = location;
         const db = wx.cloud.database();
         db.collection('userInfo')
-          .where({_id:app.globalData.userInfo.extInfo._id})
-          .update({data:{
-            location,
-            address: res.name,
-          }})
+          .where({ _id: app.globalData.userInfo.extInfo._id })
+          .update({
+            data: {
+              location,
+              address: res.name,
+            }
+          })
           .then();
       }
       this.setData({
@@ -77,15 +79,15 @@ Page({
       await this.getNurse();
     }
   },
-  getNurse: async function() {
+  getNurse: async function () {
     const db = wx.cloud.database();
     const _ = db.command
     const userCollection = db.collection('userInfo');
-    this.nurses = (await db.collection('nurse').where({status: _.eq('available')}).get()).data;
+    this.nurses = (await db.collection('nurse').where({ status: _.eq('available') }).get()).data;
     const markers = [];
     let i = 0;
     for (const nurse of this.nurses) {
-      const ui = (await userCollection.where({_openid: _.eq(nurse._openid)}).get()).data[0];
+      const ui = (await userCollection.where({ _openid: _.eq(nurse._openid) }).get()).data[0];
       nurse.userInfo = ui;
       markers.push({
         id: i,
@@ -105,25 +107,25 @@ Page({
   markertap: function (e) {
     const marker = this.data.markers[e.markerId];
     const nurse = this.nurses[e.markerId];
-    this.setData({selectedNurse: nurse});
+    this.setData({ selectedNurse: nurse });
     wx.showModal({
       title: nurse.userInfo.name,
       content: `评价：${nurse.rate || '0'} 体检：${nurse.health || '无'} 心理测试：${nurse.psychological || '无'} 从业年限：${nurse.hireDate || '无'}`,
       showCancel: false
     });
   },
-  tapusersetting: function(e) {
+  tapusersetting: function (e) {
     wx.navigateTo({
       url: './settings',
     });
   },
-  tapTemp: function(e) {
+  tapTemp: function (e) {
     wx.navigateTo({
       url: './tempservice',
     });
   },
 
-  tapContract: function(e) {
+  tapContract: function (e) {
     wx.navigateTo({
       url: './contract',
       success: res => {
@@ -140,10 +142,12 @@ Page({
     const db = wx.cloud.database();
     const _ = db.command;
     await db.collection('userInfo')
-      .where({_id:app.globalData.userInfo.extInfo._id})
-      .update({data:{
-        balance: _.inc(2400),
-      }})
+      .where({ _id: app.globalData.userInfo.extInfo._id })
+      .update({
+        data: {
+          balance: _.inc(2400),
+        }
+      })
     app.globalData.userInfo.extInfo.balance += 2400;
     this.setData({
       userInfo: app.globalData.userInfo

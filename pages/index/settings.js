@@ -15,9 +15,9 @@ Page({
     balance: 0,
     recommend: '邓阿姨',
     items: [
-      {value: 'H', name: '可以自理', checked: 'true'},
-      {value: 'B', name: '半自理'},
-      {value: 'N', name: '不能自理' },
+      { value: 'H', name: '可以自理', checked: 'true' },
+      { value: 'B', name: '半自理' },
+      { value: 'N', name: '不能自理' },
     ],
     contracts: []
   },
@@ -65,18 +65,20 @@ Page({
     this.setData({
       items
     });
-    const location = chooseLocation.getLocation(); 
+    const location = chooseLocation.getLocation();
     if (location) {
       app.globalData.userInfo.extInfo.address = location.name;
       const db = wx.cloud.database();
       db.collection('userInfo')
-        .where({_id:app.globalData.userInfo.extInfo._id})
-        .update({data:{
-          location: DB.GeoPoint(location.longitude, location.latitude),
-          address: location.name,
-        }})
+        .where({ _id: app.globalData.userInfo.extInfo._id })
+        .update({
+          data: {
+            location: DB.GeoPoint(location.longitude, location.latitude),
+            address: location.name,
+          }
+        })
         .then();
-    } 
+    }
     this.setData({
       address: app.globalData.userInfo.extInfo.address,
     });
@@ -138,16 +140,16 @@ Page({
     });
     const db = wx.cloud.database();
     await db.collection('userInfo')
-      .where({_id:app.globalData.userInfo.extInfo._id})
-      .update({data:{level}});
+      .where({ _id: app.globalData.userInfo.extInfo._id })
+      .update({ data: { level } });
     app.globalData.userInfo.extInfo.level = level;
   },
 
   bindInput(e) {
     const db = wx.cloud.database();
     db.collection('userInfo')
-      .where({_id:app.globalData.userInfo.extInfo._id})
-      .update({data:{name: e.detail.value}})
+      .where({ _id: app.globalData.userInfo.extInfo._id })
+      .update({ data: { name: e.detail.value } })
       .then();
     app.globalData.userInfo.extInfo.name = e.detail.value;
   },
@@ -160,7 +162,7 @@ Page({
       longitude: app.globalData.userInfo.extInfo.location.longitude || 107.13,
     });
     const category = '';
-    
+
     wx.navigateTo({
       url: 'plugin://chooseLocation/index?key=' + key + '&referer=' + referer + '&location=' + location + '&category=' + category
     });

@@ -3,18 +3,11 @@
   justify-content: center;
 }
 
-.serve {
-  border: 1px solid gray;
-  border-radius: 10rpx;
-  padding: 8rpx;
-}
-
-.serve-side {
+.serve-side.list {
   flex: 1 1 auto;
-}
-
-.serve-side>view {
-  margin-bottom: 28rpx;
+  margin: 0px;
+  padding-right: 0;
+  padding-left: 0;
 }
 
 .main-service {
@@ -53,7 +46,7 @@
   line-height: 64rpx;
 }
 
-.contrct-list {
+/* .contrct-list {
   padding: 8rpx;
   margin-bottom: 20rpx;
   border: 1px solid gray;
@@ -62,11 +55,10 @@
 
 .contrct-list>view:not(:last-child) {
   margin-bottom: 16rpx;
-}
+} */
 
 .contrct-item {
   justify-content: space-around;
-  background-color: lightgrey;
 }
 
 .contrct-item.active {

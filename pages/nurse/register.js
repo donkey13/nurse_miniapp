@@ -20,11 +20,31 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function (options) {
-    const res = await getLocation();
+    const db = wx.cloud.database();
+    const _ = db.command
+    const data = (await db.collection('nurse').where({ _openid: _.eq(app.globalData.userInfo.extInfo._openid) }).get()).data;
+    if (data.length > 0) {
+      await db.collection('nurse')
+        .where({ _openid: _.eq(app.globalData.userInfo.extInfo._openid) })
+        .update({
+          data: {
+            status: 'available'
+          }
+        })
+      await db.collection('userInfo')
+        .where({ _id: app.globalData.userInfo.extInfo._id })
+        .update({
+          data: {
+            type: 'nurse'
+          }
+        });
+      app.globalData.userInfo.extInfo.type = 'nurse';
+      wx.navigateBack({});
+    }
+
     this.setData({
-      latitude : res.latitude,
-      longitude : res.longitude
-     });
+      name: app.globalData.userInfo.extInfo.name,
+    });
   },
 
   /**
@@ -77,35 +97,35 @@ Page({
   },
 
   tapidf: async function () {
-    const tempUrl = await this.chooseImage();    
+    const tempUrl = await this.chooseImage();
     this.setData({
       idfUrl: tempUrl
-    });    
-    this.isValid(); 
+    });
+    this.isValid();
   },
   tapidb: async function () {
-    const tempUrl = await this.chooseImage();    
+    const tempUrl = await this.chooseImage();
     this.setData({
       idbUrl: tempUrl
-    });    
-    this.isValid(); 
+    });
+    this.isValid();
   },
   taphealthf: async function () {
-    const tempUrl = await this.chooseImage();    
+    const tempUrl = await this.chooseImage();
     this.setData({
       healthfUrl: tempUrl
-    });    
-    this.isValid(); 
+    });
+    this.isValid();
   },
   taphealthb: async function () {
-    const tempUrl = await this.chooseImage();    
+    const tempUrl = await this.chooseImage();
     this.setData({
       healthbUrl: tempUrl
-    });   
-    this.isValid(); 
+    });
+    this.isValid();
   },
-  async chooseImage() {
-    return new Promise((resolve, reject) =>{
+  chooseImage() {
+    return new Promise((resolve, reject) => {
       wx.chooseImage({
         count: 1,
         sizeType: ['original', 'compressed'],
@@ -129,10 +149,10 @@ Page({
     this.setData({
       name: e.detail.value
     });
-    this.isValid(); 
+    this.isValid();
   },
   isValid() {
-    const valid = !!this.data.name 
+    const valid = !!this.data.name
       && !!this.data.idfUrl
       && !!this.data.idbUrl
       && !!this.data.healthfUrl
@@ -141,7 +161,7 @@ Page({
       && !!this.data.longitude;
     this.setData({
       invalid: !valid,
-    }); 
+    });
   },
   async tapSubmit(e) {
     const nurse = {
@@ -155,17 +175,18 @@ Page({
     };
     const db = wx.cloud.database();
     await db.collection('nurse').add({
-      data:nurse
+      data: nurse
     });
     await db.collection('userInfo')
-      .where({_id:app.globalData.userInfo.extInfo._id})
-      .update({data:{
-        name: this.data.name,
-        type: 'nurse'
-      }});
+      .where({ _id: app.globalData.userInfo.extInfo._id })
+      .update({
+        data: {
+          name: this.data.name,
+          type: 'nurse'
+        }
+      });
     app.globalData.userInfo.extInfo.type = 'nurse';
 
-    wx.navigateBack({
-    })
+    wx.navigateBack({});
   }
 })
