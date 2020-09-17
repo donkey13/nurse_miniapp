@@ -10,18 +10,24 @@ page {
   align-items: stretch;
   justify-content: space-between;
   box-sizing: border-box;
+  background-color: #e2e2e2;
 } 
 
-.container.content-start {
+.content.content-start {
   justify-content: start;
 }
 
-.container>view {
-  margin-left: 10rpx;
-  margin-right: 10rpx;
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  flex: 1 1 auto;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
 }
 
-.container>view:not(:last-child) {
+.content>view:not(:last-child) {
   margin-bottom: 10rpx;
 }
 
@@ -53,9 +59,41 @@ text.title {
   margin-bottom: 20rpx;
 }
 
+text.subtitle {
+  font-weight: bold;
+  margin-bottom: 20rpx;
+}
+
 text.label {
   height: 38rpx;
   line-height: 38rpx;
   font-size: small;
   color: darkgray;
+}
+
+.list {
+  background-color: white;
+  padding: 10rpx 20rpx;
+}
+
+.list > .list-item {
+  padding: 20rpx;
+}
+
+.list > .list-item:not(:last-child) {
+  border-bottom: 2rpx solid #e2e2e2;
+}
+
+.navbar {
+  background-color: white;
+  margin-right: 0px;
+  margin-left: 0px;
+  border-top: 2rpx solid #e2e2e2;
+  padding-bottom: 20rpx;
+}
+
+.navbar > button.nav-btn {
+  flex: 1 1 auto;
+  margin: 0;
+  border: none;
 }

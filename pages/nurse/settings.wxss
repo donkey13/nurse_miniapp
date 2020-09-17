@@ -1,0 +1,4 @@
+/* pages/nurse/settings.wxss */
+.work-status > view {
+  margin-bottom: 20rpx;
+}

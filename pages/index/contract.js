@@ -9,12 +9,13 @@ Page({
    */
   data: {
     userInfo: {},
-    date:'',
+    date: '',
     serveLength: 1,
-    inputAddress:'',
+    inputAddress: '',
     selectedNurse: {},
+    type: 'long',
     terms: `
-    <div class="div_class">
+<div class="div_class">
   <h4>我们提供的服务类型为:</h4>
   <p>一般家务</p>
   <p>老人护理<p>
@@ -31,12 +32,12 @@ Page({
 </div>
     `,
     region: ['陕西省', '宝鸡市', '渭滨区'],
-    userName:'',
-    userId:'',
-    userTel:'',
-    sonName:'',
-    sonId:'',
-    sonTel:'',
+    userName: '',
+    userId: '',
+    userTel: '',
+    sonName: '',
+    sonId: '',
+    sonTel: '',
   },
 
   /**
@@ -44,7 +45,7 @@ Page({
    */
   onLoad: function (options) {
     const ch = this.getOpenerEventChannel();
-    ch.on('selected-nurse', data =>{
+    ch.on('selected-nurse', data => {
       this.setData({
         selectedNurse: data
       })
@@ -103,22 +104,55 @@ Page({
   onShareAppMessage: function () {
 
   },
-  bindDateChange: function(e) {
+  bindDateChange(e) {
     this.setData({
       date: e.detail.value
     });
   },
-  bindInput: function(e) {
+  bindInput(e) {
     this.setData({
       serveLength: e.detail.value
     });
   },
-  bindAddressInput: function(e) {
+  bindAddressInput(e) {
     this.setData({
       inputAddress: e.detail.value
     });
   },
-  tapOk: async function(e) {
+  bindNameInput(e) {
+    this.setData({
+      userName: e.detail.value
+    });
+  },
+  bindIdInput(e) {
+    this.setData({
+      userId: e.detail.value
+    });
+  },
+  bindPhoneInput(e) {
+    this.setData({
+      userTel: e.detail.value
+    });
+  },
+  bindSonNameInput(e) {
+    this.setData({
+      sonName: e.detail.value
+    });
+  },
+  bindSonIdInput(e) {
+    this.setData({
+      sonId: e.detail.value
+    });
+  },
+  bindSonPhoneInput(e) {
+    this.setData({
+      sonTel: e.detail.value
+    });
+  },
+  radioChange(e) {
+    this.setData({ type: e.detail.value });
+  },
+  tapOk: async function (e) {
     if (this.data.serveLength < 1) {
       wx.showToast({
         title: '服务时长不合法。',
@@ -136,19 +170,27 @@ Page({
     }
     const db = wx.cloud.database();
     await db.collection('contract').add({
-      data:{ 
+      data: {
         startDate: this.data.date,
         serveLength: this.data.serveLength,
+        type: this.data.type,
         customer: app.globalData.userInfo.extInfo._openid,
         nurse: this.data.selectedNurse._openid,
-        address: app.globalData.userInfo.extInfo.address,
-        serveDay: 0
-       }
+        address: this.data.inputAddress,
+        serveDay: 0,
+        userName: this.data.userName,
+        userId: this.data.userId,
+        userTel: this.data.userTel,
+        sonName: this.data.sonName,
+        sonId: this.data.sonId,
+        sonTel: this.data.sonTel,
+      }
     });
-    await db.collection('userInfo').where({_id:app.globalData.userInfo.extInfo._id}).update({data:{balance: balance}});
+    await db.collection('userInfo')
+      .where({ _id: app.globalData.userInfo.extInfo._id })
+      .update({ data: { balance: balance } });
     app.globalData.userInfo.extInfo.balance = balance;
     wx.navigateBack({
-      complete: (res) => {},
     })
   }
 })

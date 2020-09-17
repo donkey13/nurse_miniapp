@@ -1,6 +1,7 @@
 // pages/index/settings.js
 const moment = require('../../utils/moment.min.js');
 const app = getApp();
+const chooseLocation = requirePlugin('chooseLocation');
 
 Page({
 
@@ -8,14 +9,15 @@ Page({
    * 页面的初始数据
    */
   data: {
+    name: '',
     address: '',
     serveDay: 0,
     balance: 0,
     recommend: '邓阿姨',
     items: [
-      {value: '0', name: '可以自理', checked: 'true'},
-      {value: '1', name: '半卧床'},
-      {value: '2', name: '卧床' },
+      { value: 'H', name: '可以自理', checked: 'true' },
+      { value: 'B', name: '半自理' },
+      { value: 'N', name: '不能自理' },
     ],
     contracts: []
   },
@@ -36,6 +38,8 @@ Page({
       serveDay += i.serveDay;
     }
     this.setData({
+      name: app.globalData.userInfo.extInfo.name,
+      phone: app.globalData.userInfo.extInfo.phone,
       serveDay,
       contracts,
       address: app.globalData.userInfo.extInfo.address,
@@ -54,15 +58,31 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    const level = app.globalData.userInfo.extInfo.level || '0';
+    const level = app.globalData.userInfo.extInfo.level || 'H';
     const items = this.data.items;
     for (const item of items) {
       item.checked = item.value === level;
     }
     this.setData({
-      address: app.globalData.userInfo.extInfo.address,
       items
-    })
+    });
+    const location = chooseLocation.getLocation();
+    if (location) {
+      app.globalData.userInfo.extInfo.address = location.name;
+      const db = wx.cloud.database();
+      db.collection('userInfo')
+        .where({ _id: app.globalData.userInfo.extInfo._id })
+        .update({
+          data: {
+            location: DB.GeoPoint(location.longitude, location.latitude),
+            address: location.name,
+          }
+        })
+        .then();
+    }
+    this.setData({
+      address: app.globalData.userInfo.extInfo.address,
+    });
   },
 
   /**
@@ -121,19 +141,39 @@ Page({
     });
     const db = wx.cloud.database();
     await db.collection('userInfo')
-      .where({_id:app.globalData.userInfo.extInfo._id})
-      .update({data:{level}});
+      .where({ _id: app.globalData.userInfo.extInfo._id })
+      .update({ data: { level } });
     app.globalData.userInfo.extInfo.level = level;
   },
-  
-  inputAddress: function(e) {
-    const address = e.detail.value;
-    app.globalData.userInfo.extInfo.address = address;
 
+  bindInput(e) {
     const db = wx.cloud.database();
     db.collection('userInfo')
-      .where({_id:app.globalData.userInfo.extInfo._id})
-      .update({data:{address}})
+      .where({ _id: app.globalData.userInfo.extInfo._id })
+      .update({ data: { name: e.detail.value } })
       .then();
+    app.globalData.userInfo.extInfo.name = e.detail.value;
+  },
+
+  bindPhoneInput(e) {
+    const db = wx.cloud.database();
+    db.collection('userInfo')
+      .where({ _id: app.globalData.userInfo.extInfo._id })
+      .update({ data: { phone: e.detail.value } })
+      .then();
+    app.globalData.userInfo.extInfo.phone = e.detail.value;
+  },
+  openmap() {
+    const key = 'NCLBZ-NOYC5-2ZEI7-QK2IV-RGYE3-FHBY3'; //使用在腾讯位置服务申请的key
+    const referer = '生活守望'; //调用插件的app的名称
+    const location = JSON.stringify({
+      latitude: app.globalData.userInfo.extInfo.location.latitude || 34.37,
+      longitude: app.globalData.userInfo.extInfo.location.longitude || 107.13,
+    });
+    const category = '';
+
+    wx.navigateTo({
+      url: 'plugin://chooseLocation/index?key=' + key + '&referer=' + referer + '&location=' + location + '&category=' + category
+    });
   }
 })

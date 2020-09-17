@@ -3,7 +3,10 @@ input {
   border-bottom: 1px solid gray;
   flex: 1 1 auto;
 } 
-
+.btn-img {
+  width: 44rpx;
+  height: 44rpx;
+}
 .contrct-list {
   padding: 8rpx;
   margin-bottom: 20rpx;
@@ -24,6 +27,10 @@ input {
   background-color: #07c160;
 }
 
-.btn-grp>button:not(:last-child) {
-  margin-right: 10rpx;
+.row > .label {
+  flex: 0 0 100px;
+}
+
+.input-list>view:not(:last-child) {
+  margin-bottom: 16rpx;
 }

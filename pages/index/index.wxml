@@ -1,54 +1,45 @@
 <!--index.wxml-->
 <view class="container">
-  <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-  <block wx:else>
-    <view >
-      <swiper indicator-dots="true" autoplay="true" >
-
-        <swiper-item>
-          <view class="">
-            <button type="default" bindtap="tabRegister">注册成为护工</button>
-          </view>
-        </swiper-item>
-        <swiper-item>
-          <image src='/images/shouye.png'>公告</image>
-        </swiper-item>
-      </swiper>
-    </view>
-    <view class="flex column " style="flex: 1 1 auto" >
-      <map class="map" id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" markers="{{markers}}" bindmarkertap="markertap" show-location></map>
-    </view>
-    <view class="flex row align-center">
-      <text class="label">我的地址：</text>
-      <text>{{userInfo.extInfo.address}}"</text>
-    </view>
-    <view class="flex row align-center">
-      <text class="label">我的余额：</text>
-      <text>{{userInfo.extInfo.balance}}</text>
-    </view>
-    <view class="flex row align-center">
-      <text class="label" >选中的护工：</text>
-      <text>{{selectedNurse.name}}</text>
-    </view>
-
-    <view class="flex row align-center">
-    <text class="label" >服务类型：</text>
-    <radio-group class="flex row align-center">
-      <label class="label" wx:for="{{items}}" wx:key="{{item.value}}">
-        <view class="radio">
-          <radio value="{{item.value}}" checked="true"/>
-        </view>
-        <view class="radioname">{{item.name}}</view>
-        </label>
-    </radio-group> 
-    </view>
-
-    <view class="flex row btn-grp"> 
-      <button type="default" bindtap="tapContract" >长包</button>
-      <button type="default" bindtap="tapTemp" >临时</button>
-      <button type="default" bindtap="tapusersetting" >我的</button>
-      <button type="default" bindtap="tapPay" >支付</button>
-      <button type="default" disabled="true">邀请</button>
-    </view>
-  </block>
+	<button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+	<block wx:else>
+		<view class="content">
+			<view>
+				<swiper indicator-dots="true" autoplay="true">
+					<swiper-item>
+						<view class="">
+							<button type="default" bindtap="tabRegister">注册成为护工</button>
+						</view>
+					</swiper-item>
+					<swiper-item>
+						<image src='/images/shouye.png'>公告</image>
+					</swiper-item>
+				</swiper>
+			</view>
+			<view class="flex column " style="flex: 1 1 auto">
+				<map class="map" id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" markers="{{markers}}" bindmarkertap="markertap" show-location></map>
+			</view>
+			<view class="list">
+				<view class="list-item flex row align-center">
+					<text class="label">姓名：</text>
+					<text>{{userInfo.extInfo.name}}</text>
+				</view>
+				<view class="list-item flex row align-center">
+					<text class="label">我的地址：</text>
+					<text>{{userInfo.extInfo.address}}</text>
+				</view>
+				<view class="list-item flex row align-center">
+					<text class="label">我的余额：</text>
+					<text>{{userInfo.extInfo.balance}}</text>
+				</view>
+				<view class="list-item flex row align-center">
+					<text class="label" >选择护工：</text>
+					<text>{{selectedNurse.name}}</text>
+				</view>
+			</view>
+		</view>
+		<view class="navbar flex row">
+			<button class="nav-btn" type="default" plain="true" style="border: none;" bindtap="tapContract">预约</button>
+			<button class="nav-btn" type="default" plain="true" style="border: none;" bindtap="tapusersetting">我的</button>
+		</view>
+	</block>
 </view>
