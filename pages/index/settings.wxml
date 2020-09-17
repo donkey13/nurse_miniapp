@@ -55,7 +55,7 @@
 	</view>
 	<view class="navbar flex row">
 		<button class="nav-btn" type="default" plain="true" style="border: none;" bindtap="openmap">地址</button>
-		<button class="nav-btn" type="default" plain="true" style="border: none;">记录</button>
+		<button class="nav-btn" type="default" plain="true" style="border: none;">充值</button>
 		<button class="nav-btn" type="default" plain="true" style="border: none;">评价</button>
 		<button class="nav-btn" type="default" plain="true" style="border: none;">发票</button>
 	</view>
