@@ -1,51 +1,62 @@
 <!--pages/index/settings.wxml-->
 <view class="container">
-  <view>
-    <text>已为您服务 {{serveDay}} 天。</text>
-  </view>
-  <view class="flex column contrct-list" style="flex: 1 1 auto">
-    <view>
-      <text class="title">我的服务记录</text>
-    </view>
-    <view class="flex row contrct-item {{item.status}}" wx:for="{{contracts}}" wx:key="_id">
-      <text >{{item.address}}</text>
-      <text >{{item.startDate}}</text>
-      <text >{{item.serveLength}}个月</text>
-    </view>
-  </view>
-  <view class="flex row align-center">
-    <text class="label">姓名：</text>
-    <input class="input-value" value="{{name}}" placeholder="姓名" bindinput="bindInput" auto-focus/>
-  </view>
-  <view class="flex row align-center">
-    <text class="label">我的地址：</text>
-    <text style="flex: 1 1 auto" >{{address}}</text>
-  </view>
-  <view class="flex row align-center">
-    <text class="label">我的余额：</text>
-    <text>{{balance}}</text>
-  </view>
+	<view class="content">
+		<view class="list">
+			<view class="list-item">
+				<text>已为您服务 {{serveDay}} 天。</text>
+			</view>
+		</view>
+		<view class="list" style="flex: 1 1 auto">
+			<view class="list-item">
+				<text class="title">我的服务记录</text>
+			</view>
+			<view class="list-item input-list">
+				<view class="flex row contrct-item {{item.status}}" wx:for="{{contracts}}" wx:key="_id">
+					<text >{{item.address}}</text>
+					<text >{{item.startDate}}</text>
+					<text >{{item.serveLength}}个月</text>
+				</view>
+			</view>
+		</view>
+		<view class="list input-list">
+			<view class="flex row align-center">
+				<text class="label">姓名：</text>
+				<input class="input-value" value="{{name}}" placeholder="姓名" bindinput="bindInput" />
+			</view>
+			<view class="flex row align-center">
+				<text class="label">电话：</text>
+				<input class="input-value" value="{{phone}}" placeholder="电话" bindinput="bindPhobeInput" />
+			</view>
+			<view class="flex row align-center">
+				<text class="label">我的地址：</text>
+				<text style="flex: 1 1 auto" >{{address}}</text>
+			</view>
+			<view class="flex row align-center">
+				<text class="label">我的余额：</text>
+				<text>{{balance}}</text>
+			</view>
 
-  <view>
-    <radio-group bindchange="radioChange">
-      <label class="flex row" wx:for="{{items}}" wx:key="value">
-        <view >
-          <radio value="{{item.value}}" checked="{{item.checked}}"/>
-        </view>
-        <view >{{item.name}}</view>
-      </label>
-    </radio-group>
-  </view>
-  <view class="flex row align-center">
-    <text class="label">我的推荐人：</text>
-    <text>{{recommend}}</text>
-  </view>
-  <view style="height: 2px; border-bottom: 1px solid gray;"></view>
-  <view class="flex row btn-grp"> 
-    <button type="default" bindtap="openmap">地址</button>
-    <button type="default">记录</button>
-    <button type="default">评价</button>
-    <button type="default">发票</button>
-  </view>
+			<view class="flex row align-center">
+				<text class="label">护理类型：</text>
+				<radio-group bindchange="radioChange">
+					<label class="flex row" wx:for="{{items}}" wx:key="value">
+						<view>
+							<radio value="{{item.value}}" checked="{{item.checked}}" />
+						</view>
+						<view>{{item.name}}</view>
+					</label>
+				</radio-group>
+			</view>
+			<view class="flex row align-center">
+				<text class="label">我的推荐人：</text>
+				<text>{{recommend}}</text>
+			</view>
+		</view>
+	</view>
+	<view class="navbar flex row">
+		<button class="nav-btn" type="default" plain="true" style="border: none;" bindtap="openmap">地址</button>
+		<button class="nav-btn" type="default" plain="true" style="border: none;">记录</button>
+		<button class="nav-btn" type="default" plain="true" style="border: none;">评价</button>
+		<button class="nav-btn" type="default" plain="true" style="border: none;">发票</button>
+	</view>
 </view>
-

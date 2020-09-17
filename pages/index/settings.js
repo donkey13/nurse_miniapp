@@ -39,6 +39,7 @@ Page({
     }
     this.setData({
       name: app.globalData.userInfo.extInfo.name,
+      phone: app.globalData.userInfo.extInfo.phone,
       serveDay,
       contracts,
       address: app.globalData.userInfo.extInfo.address,
@@ -154,6 +155,14 @@ Page({
     app.globalData.userInfo.extInfo.name = e.detail.value;
   },
 
+  bindPhoneInput(e) {
+    const db = wx.cloud.database();
+    db.collection('userInfo')
+      .where({ _id: app.globalData.userInfo.extInfo._id })
+      .update({ data: { phone: e.detail.value } })
+      .then();
+    app.globalData.userInfo.extInfo.phone = e.detail.value;
+  },
   openmap() {
     const key = 'NCLBZ-NOYC5-2ZEI7-QK2IV-RGYE3-FHBY3'; //使用在腾讯位置服务申请的key
     const referer = '生活守望'; //调用插件的app的名称
