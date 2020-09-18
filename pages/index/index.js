@@ -138,22 +138,5 @@ Page({
       url: '../nurse/register',
     });
   },
-  async tapPay(e) {
-    const db = wx.cloud.database();
-    const _ = db.command;
-    await db.collection('userInfo')
-      .where({ _id: app.globalData.userInfo.extInfo._id })
-      .update({
-        data: {
-          balance: _.inc(2400),
-        }
-      })
-    app.globalData.userInfo.extInfo.balance += 2400;
-    this.setData({
-      userInfo: app.globalData.userInfo
-    });
-    wx.showToast({
-      title: '微信支付2400',
-    });
-  }
+  
 })
